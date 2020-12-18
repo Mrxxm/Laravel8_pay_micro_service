@@ -19,7 +19,7 @@ class CheckPayToken
         $validator = Validator::make($data, [
             'app_id'           => 'required|integer',
             'token'            => 'required|string',
-            'time'             => 'required|string',
+            'time'             => 'required|integer|digits:10',
         ]);
 
         if ($validator->fails()) {
