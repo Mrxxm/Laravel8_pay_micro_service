@@ -19,7 +19,7 @@ class AppIdController
         ]);
 
         if ($validator->fails()) {
-            return Response::missParamResponse();
+            return Response::missParamResponse([], $validator->errors()->first());
         }
 
         $service = new AppIdServiceImpl();
@@ -46,7 +46,7 @@ class AppIdController
         ]);
 
         if ($validator->fails()) {
-            return Response::missParamResponse();
+            return Response::missParamResponse([], $validator->errors()->first());
         }
 
         $service = new AppIdServiceImpl();
