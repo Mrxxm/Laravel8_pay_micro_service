@@ -44,6 +44,11 @@ class Response
         return response()->json($result);
     }
 
+    public static function missParamResponse(array $result = [], string $message = '')
+    {
+        return static::makeResponse(false, Response::MISSING_PARAM, $result, $message);
+    }
+
     public static function successResponse(array $result = [], string $message = '')
     {
         return static::makeResponse(true, Response::SUCCESS_CODE, $result, $message);
