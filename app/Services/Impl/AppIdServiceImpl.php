@@ -18,7 +18,7 @@ class AppIdServiceImpl implements AppIdService
 
     public function list(array $data): array
     {
-        $select = ['id', 'app_name', 'app_key', 'app_expire', 'stitching_symbol', 'description', 'create_time', 'update_time'];
+        $select = ['id', 'app_name', 'app_key', 'app_expire', 'stitching_symbol', 'description', 'create_time', 'update_time', 'delete_time'];
 
         $keyword = $data['keyword'] ?? '';
         $conditions = [];
