@@ -3,11 +3,10 @@
 
 namespace App\Http\Middleware;
 
-
+use Closure;
+use App\Utils\Redis;
 use App\Http\Controllers\Response;
 use App\Services\Impl\AppIdServiceImpl;
-use App\Utils\Redis;
-use Closure;
 use Illuminate\Support\Facades\Validator;
 
 class CheckPayToken
