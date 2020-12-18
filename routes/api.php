@@ -6,7 +6,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Api'], function () {
 
     Route::group(['middleware' => ['checkPayToken']], function () {
 
-        Route::any('pay/unifiedOrder', 'PayController@unifiedOrder');
+        Route::post('pay/unifiedOrder', 'PayController@unifiedOrder');
 
     });
 });
