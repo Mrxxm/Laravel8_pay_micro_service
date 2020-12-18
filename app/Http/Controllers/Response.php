@@ -43,4 +43,14 @@ class Response
 
         return response()->json($result);
     }
+
+    public static function successResponse(array $result = [], string $message = '')
+    {
+        return static::makeResponse(true, Response::SUCCESS_CODE, $result, $message);
+    }
+
+    public static function errorResponse(array $result = [], string $message = '')
+    {
+        return static::makeResponse(false, Response::UNKNOWN_ERROR, $result, $message);
+    }
 }
