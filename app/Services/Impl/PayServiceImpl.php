@@ -18,7 +18,7 @@ class PayServiceImpl implements PayService
     {
     }
 
-    public function unifiedOrder(array $data): array
+    public function unifiedOrder(array $data)
     {
         $serveType  = $data['serve_type'];
         $payType    = $data['pay_type'];
