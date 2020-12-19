@@ -16,21 +16,15 @@ class PayServiceImpl implements PayService
 
     public function __construct()
     {
-        $this->wConfig = [
-            'miniapp_id' => env('WECHAT_MINIAPP_ID'),
-            'mch_id'     => env("WECHAT_MCH_ID"),
-            'key'        => env("WECHAT_KEY"),
-            'notify_url' => "https://pay.kenrou.cn/api/pay/wechatNotify",
-        ];
-        $this->aConfig = [];
     }
 
     public function unifiedOrder(array $data): array
     {
         $serveType  = $data['serve_type'];
         $payType    = $data['pay_type'];
+
         try {
-            $result = $this->serveAndPay($serveType, $payType);
+            $result = $this->serveAndPayToPay($serveType, $payType, $data);
         } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }
@@ -54,16 +48,23 @@ class PayServiceImpl implements PayService
         return $result;
     }
 
-    private function serveAndPay(string $serveType, string $payType)
+    private function serveAndPayToPay(string $serveType, string $payType, array $data)
     {
         $switchType = $serveType . '_' . $payType;
+        $fields = [
+            'out_trade_no' => $data['order_no'],
+            'total_fee'    => $data['total_price'] * 100,
+            'body'         => $data['body'],
+            'openid'       => $data['openid'],
+            'notify_url'   => 'https://pay.kenrou.cn/api/pay/wechatNotify'
+        ];
 
         switch ($switchType) {
             case 'wechat_pay_mini':
-                $result = Pay::wechat()->miniapp();
+                $result = Pay::wechat()->miniapp($fields);
                 break;
             case 'ali_pay_mini':
-                $result = Pay::alipay()->mini($this->aConfig);
+                $result = Pay::alipay()->mini();
                 break;
             default:
                 throw new \Exception('未匹配到服务商和支付类型，请重试');
