@@ -14,7 +14,7 @@ class PayController
 {
     public function unifiedOrder(Request $request)
     {
-        $data = $request->only('serve_type', 'pay_type', 'body', 'order_no', 'total_price');
+        $data = $request->only('serve_type', 'pay_type', 'body', 'order_no', 'total_price', 'openid');
 
         $validator = Validator::make($data, [
             'serve_type'       => 'required|string',
