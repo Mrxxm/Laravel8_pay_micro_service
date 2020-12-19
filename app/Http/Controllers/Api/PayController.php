@@ -53,4 +53,28 @@ class PayController
 
         Log::channel('notify')->debug($notifyData);
     }
+
+    public function getOrder(Request $request)
+    {
+        $data = $request->only('app_id', 'order_no');
+
+        $validator = Validator::make($data, [
+            'app_id'           => 'required|integer',
+            'order_no'         => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return Response::missParamResponse([], $validator->errors()->first());
+        }
+
+        $service = new PayServiceImpl();
+
+        try {
+            $result = $service->getOrder($data);
+        } catch (\Exception $exception) {
+            return Response::errorResponse([], $exception->getMessage());
+        }
+
+        return Response::successResponse($result);
+    }
 }
