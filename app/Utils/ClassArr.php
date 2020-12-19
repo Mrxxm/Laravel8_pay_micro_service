@@ -10,8 +10,6 @@ class ClassArr
     {
         return [
             // pay
-            "ali_pay"            => "",
-            "weixin_pay"         => "",
             // ocr
             "ali_ocr"            => "App\Utils\OCR\AliOcr",
             // sms
