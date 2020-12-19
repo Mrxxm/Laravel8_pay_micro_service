@@ -16,7 +16,12 @@ class PayServiceImpl implements PayService
 
     public function __construct()
     {
-        $this->wConfig = [];
+        $this->wConfig = [
+            'miniapp_id' => env('WECHAT_MINIAPP_ID'),
+            'mch_id'     => env("WECHAT_MCH_ID"),
+            'key'        => env("WECHAT_KEY"),
+            'notify_url' => "https://pay.kenrou.cn/api/pay/wechatNotify",
+        ];
         $this->aConfig = [];
     }
 
@@ -66,7 +71,7 @@ class PayServiceImpl implements PayService
         }
 
         $payReturn = resultToArray($result);
-        Log::debug($payReturn);
+        Log::channel('pay')->debug($payReturn);
         return $result;
     }
 }
