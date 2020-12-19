@@ -21,6 +21,7 @@ class PayController
             'body'             => 'required|string',
             'order_no'         => 'required|string',
             'total_price'      => 'required|string',
+            'openid'           => 'string',
         ]);
 
         if ($validator->fails()) {
