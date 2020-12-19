@@ -36,7 +36,7 @@ class CheckPayToken
             return Response::errorResponse([], '请求token时间已过期，请重新生成token');
         }
 
-        // token检测
+        // token检测 加密方式：md5(time + symbol + app_id + symbol + app_key)
         $tokenFields = [$data['time'], $data['app_id'], $app->app_key];
         if ($data['token'] != md5(implode($app['stitching_symbol'], $tokenFields))) {
             return Response::errorResponse([], '不合法的请求，请检验token是否合法');
