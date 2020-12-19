@@ -76,4 +76,20 @@ class PayServiceImpl implements PayService
 
         return $payReturn;
     }
+
+    public function getOrder(array $data): array
+    {
+        $key     = "order_" . $data['app_id'];
+        $hashKey = $data['order_no'];
+        try {
+            $redisOrder = (Redis::getInstance())->hGet($key, $hashKey);
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getMessage());
+        }
+        if ($redisOrder) {
+            return json_decode($redisOrder, true);
+        }
+
+        return [];
+    }
 }
