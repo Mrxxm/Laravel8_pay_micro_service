@@ -47,6 +47,18 @@ return [
             'level' => 'debug',
         ],
 
+        'pay' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/pay.log'),
+            'level' => 'debug',
+        ],
+
+        'notify' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/notify.log'),
+            'level' => 'debug',
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
