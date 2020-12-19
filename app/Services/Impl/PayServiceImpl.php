@@ -50,7 +50,7 @@ class PayServiceImpl implements PayService
 
     private function serveAndPayToPay(string $serveType, string $payType, array $data)
     {
-        $switchType = $serveType . '_' . $payType;
+        $switchType = $serveType . '_pay_' . $payType;
         $fields = [
             'out_trade_no' => $data['order_no'],
             'total_fee'    => $data['total_price'] * 100,
