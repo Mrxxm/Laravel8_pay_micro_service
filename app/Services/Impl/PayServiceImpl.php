@@ -18,7 +18,7 @@ class PayServiceImpl implements PayService
     {
     }
 
-    public function unifiedOrder(array $data)
+    public function unifiedOrder(array $data) : array
     {
         $serveType  = $data['serve_type'];
         $payType    = $data['pay_type'];
@@ -73,6 +73,7 @@ class PayServiceImpl implements PayService
 
         $payReturn = resultToArray($result);
         Log::channel('pay')->debug($payReturn);
-        return $result;
+
+        return $payReturn;
     }
 }
