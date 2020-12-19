@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Response;
 use App\Services\Impl\PayServiceImpl;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class PayController
@@ -37,5 +38,19 @@ class PayController
         }
 
         return Response::successResponse($result);
+    }
+
+    /**
+     * 支付回调接口
+     * 每隔一段时间调用
+     * 频率：15/15/30/180/1800/1800/1800/1800/3600, 单位:秒
+     */
+    public function wechatNotify()
+    {
+        $xml     = file_get_contents("php://input");
+        $jsonXml = json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA));
+        $notifyData = $jsonXml;
+
+        Log::channel('notify')->debug($notifyData);
     }
 }
