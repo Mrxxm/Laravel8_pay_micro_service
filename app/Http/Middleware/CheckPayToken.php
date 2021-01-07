@@ -56,6 +56,8 @@ class CheckPayToken
         ];
         $redisClient->hSet('pay_token', $data['app_id'], json_encode($appRedis));
 
-        return $next($request);
+        $response = $next($request);
+
+        return $response;
     }
 }
