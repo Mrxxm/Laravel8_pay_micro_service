@@ -10,6 +10,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Api'], function () {
     Route::group(['middleware' => ['checkPayToken']], function () {
 
         Route::post('pay/unifiedOrder', 'PayController@unifiedOrder');
+        Route::post('payment/getWXPayQRCode', 'PayController@getWXPayQRCode');
 
     });
 });
