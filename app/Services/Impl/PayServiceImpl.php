@@ -34,6 +34,7 @@ class PayServiceImpl implements PayService
             'pay_type'    => $payType,
             'serve_type'  => $serveType,
             'body'        => $data['body'],
+            'user_id'     => $data['user_id'],
             'total_price' => $data['total_price'],
             'code_url'    => $result['code_url'] ?? '',
             'create_time' => time()
