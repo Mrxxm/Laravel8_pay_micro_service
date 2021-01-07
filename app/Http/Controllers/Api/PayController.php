@@ -58,12 +58,12 @@ class PayController
         Log::channel('notify')->debug($notifyData);
 
         $appIdService = new AppIdServiceImpl();
-        $appIds = $appIdService->model->selelct('id as app_id')->get();
+        $appIds = $appIdService->model->select('id as app_id')->get();
         if (count($appIds)) {
             $appIds = resultToArray($appIds);
             foreach ($appIds as $appId) {
                 $key     = "order_" . $appId['app_id'];
-                $hashKey = $notifyData['order_no'];
+                $hashKey = $notifyData['out_trade_no'];
                 $hashValue = (Redis::getInstance())->hGet($key, $hashKey);
                 if ($hashValue) {
                     $hashValue = json_decode($hashValue, true);
