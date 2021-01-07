@@ -56,7 +56,7 @@ class PayServiceImpl implements PayService
             'out_trade_no' => $data['order_no'],
             'total_fee'    => $data['total_price'] * 100,
             'body'         => $data['body'],
-            'openid'       => $data['openid'],
+            'openid'       => $data['openid'] ?? '',
             'notify_url'   => 'https://pay.kenrou.cn/api/pay/wechatNotify'
         ];
 
