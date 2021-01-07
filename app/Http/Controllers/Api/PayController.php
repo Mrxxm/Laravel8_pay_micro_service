@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Response;
+use App\Services\Impl\AppIdServiceImpl;
 use App\Services\Impl\PayServiceImpl;
+use App\Utils\Redis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -51,9 +53,28 @@ class PayController
     {
         $xml     = file_get_contents("php://input");
         $jsonXml = json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA));
-        $notifyData = $jsonXml;
+        $notifyData = json_decode($jsonXml, true); // 转成数组
 
         Log::channel('notify')->debug($notifyData);
+
+        $appIdService = new AppIdServiceImpl();
+        $appIds = $appIdService->model->selelct('id as app_id')->get();
+        if (count($appIds)) {
+            $appIds = resultToArray($appIds);
+            foreach ($appIds as $appId) {
+                $key     = "order_" . $appId['app_id'];
+                $hashKey = $notifyData['order_no'];
+                $hashValue = (Redis::getInstance())->hGet($key, $hashKey);
+                if ($hashValue) {
+                    $hashValue = json_decode($hashValue, true);
+                    $hashValue['pay_status'] = 20;
+                    (Redis::getInstance())->hSet($key, $hashKey, json_encode($hashValue));
+                    break;
+                }
+            }
+        }
+
+        return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
     }
 
     public function getOrder(Request $request)
