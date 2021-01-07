@@ -33,6 +33,8 @@ class PayServiceImpl implements PayService
             'pay_status'  => 10, // 待支付 1: 已支付
             'pay_type'    => $payType,
             'serve_type'  => $serveType,
+            'body'        => $data['body'],
+            'total_price' => $data['total_price'],
             'code_url'    => $result['code_url'] ?? '',
             'create_time' => time()
         ];
