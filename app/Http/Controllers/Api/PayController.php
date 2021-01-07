@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\Validator;
 
 class PayController
 {
+    public function __construct()
+    {
+        header("Access-Control-Allow-Origin: http://localhost:8080");
+        header("Access-Control-Allow-Credentials: true");
+        header('Access-Control-Allow-Methods:*');
+        header('Access-Control-Allow-Headers:*');
+    }
+
     public function unifiedOrder(Request $request)
     {
         $data = $request->only('serve_type', 'pay_type', 'body', 'order_no', 'total_price', 'openid');
@@ -71,6 +79,30 @@ class PayController
 
         try {
             $result = $service->getOrder($data);
+        } catch (\Exception $exception) {
+            return Response::errorResponse([], $exception->getMessage());
+        }
+
+        return Response::successResponse($result);
+    }
+
+    public function getWXPayQRCode(Request $request)
+    {
+        $data = $request->only('app_id', 'order_no');
+
+        $validator = Validator::make($data, [
+            'app_id'           => 'required|integer',
+            'order_no'         => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return Response::missParamResponse([], $validator->errors()->first());
+        }
+
+        $service = new PayServiceImpl();
+
+        try {
+            $result = $service->getQRCode($data);
         } catch (\Exception $exception) {
             return Response::errorResponse([], $exception->getMessage());
         }
