@@ -30,9 +30,10 @@ class PayServiceImpl implements PayService
         }
 
         $orderData = [
-            'pay_status'  => 0, // 待支付 1: 已支付
+            'pay_status'  => 10, // 待支付 1: 已支付
             'pay_type'    => $payType,
             'serve_type'  => $serveType,
+            'code_url'    => $result['code_url'] ?? '',
             'create_time' => time()
         ];
 
@@ -99,6 +100,23 @@ class PayServiceImpl implements PayService
         }
         if ($redisOrder) {
             return json_decode($redisOrder, true);
+        }
+
+        return [];
+    }
+
+    public function getQRCode(array $data): array
+    {
+        $key     = "order_" . $data['app_id'];
+        $hashKey = $data['order_no'];
+        try {
+            $redisOrder = (Redis::getInstance())->hGet($key, $hashKey);
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getMessage());
+        }
+        if ($redisOrder) {
+            $resData = json_decode($redisOrder, true);
+            return ['qrCodeUrl' => $resData['code_url']];
         }
 
         return [];
