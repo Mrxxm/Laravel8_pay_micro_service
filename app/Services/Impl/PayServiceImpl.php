@@ -41,6 +41,7 @@ class PayServiceImpl implements PayService
         $value   = json_encode($orderData);
         try {
             (Redis::getInstance())->hSet($key, $hashKey, $value);
+            (Redis::getInstance())->hDel('pay_token', request('app_id'));
         } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }
