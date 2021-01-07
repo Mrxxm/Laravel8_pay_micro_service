@@ -66,6 +66,9 @@ class PayServiceImpl implements PayService
             case 'ali_pay_mini':
                 $result = Pay::alipay()->mini();
                 break;
+            case 'wechat_pay_scan':
+                $result = Pay::wechat()->scan($fields);
+                break;
             default:
                 throw new \Exception('未匹配到服务商和支付类型，请重试');
                 break;
