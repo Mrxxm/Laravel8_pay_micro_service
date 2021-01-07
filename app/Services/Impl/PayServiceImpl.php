@@ -52,22 +52,29 @@ class PayServiceImpl implements PayService
     private function serveAndPayToPay(string $serveType, string $payType, array $data)
     {
         $switchType = $serveType . '_pay_' . $payType;
-        $fields = [
-            'out_trade_no' => $data['order_no'],
-            'total_fee'    => $data['total_price'] * 100,
-            'body'         => $data['body'],
-            'openid'       => $data['openid'] ?? '',
-            'notify_url'   => 'https://pay.kenrou.cn/api/pay/wechatNotify'
-        ];
 
         switch ($switchType) {
             case 'wechat_pay_mini':
+                $fields = [
+                    'out_trade_no' => $data['order_no'],
+                    'total_fee'    => $data['total_price'] * 100,
+                    'body'         => $data['body'],
+                    'openid'       => $data['openid'],
+                    'notify_url'   => 'https://pay.kenrou.cn/api/pay/wechatNotify'
+                ];
                 $result = Pay::wechat()->miniapp($fields);
                 break;
             case 'ali_pay_mini':
                 $result = Pay::alipay()->mini();
                 break;
             case 'wechat_pay_scan':
+                $fields = [
+                    'out_trade_no' => $data['order_no'],
+                    'total_fee'    => $data['total_price'] * 100,
+                    'body'         => $data['body'],
+                    'fee_type'     => "CNY",
+                    'notify_url'   => 'https://pay.kenrou.cn/api/pay/wechatNotify'
+                ];
                 $result = Pay::wechat()->scan($fields);
                 break;
             default:
