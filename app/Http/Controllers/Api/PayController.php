@@ -18,6 +18,7 @@ class PayController
         $data = $request->only('serve_type', 'pay_type', 'body', 'order_no', 'total_price', 'openid');
 
         $validator = Validator::make($data, [
+            'user_id'          => 'required|string',
             'serve_type'       => 'required|string',
             'pay_type'         => 'required|string',
             'body'             => 'required|string',
