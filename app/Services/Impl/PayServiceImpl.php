@@ -124,7 +124,7 @@ class PayServiceImpl implements PayService
         }
 
         $resData = json_decode($redisOrder, true);
-        if ($resData['status'] != 10) {
+        if ($resData['pay_status'] != 10) {
             throw new \Exception('订单已支付！');
         }
 
