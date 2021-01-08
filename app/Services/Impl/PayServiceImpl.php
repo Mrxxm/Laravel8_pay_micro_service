@@ -120,7 +120,7 @@ class PayServiceImpl implements PayService
         }
         if ($redisOrder) {
             $resData = json_decode($redisOrder, true);
-            return ['qrCodeUrl' => $resData['code_url']];
+            return ['qrCodeUrl' => $resData['code_url'], 'amount' => $resData['total_price']];
         }
 
         return [];
