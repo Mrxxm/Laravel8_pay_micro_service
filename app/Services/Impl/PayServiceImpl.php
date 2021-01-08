@@ -62,7 +62,7 @@ class PayServiceImpl implements PayService
             case 'wechat_pay_mini':
                 $fields = [
                     'out_trade_no' => $data['order_no'],
-                    'total_fee'    => $data['total_price'] * 100,
+                    'total_fee'    => $data['total_price'],
                     'body'         => $data['body'],
                     'openid'       => $data['openid'],
                     'notify_url'   => 'https://pay.kenrou.cn/api/pay/wechatNotify'
