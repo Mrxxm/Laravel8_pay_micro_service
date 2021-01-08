@@ -52,14 +52,15 @@ class PayController
      */
     public function wechatNotify()
     {
-//        $xml     = file_get_contents("php://input");
-//        $jsonXml = json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA));
-//        $notifyData = json_decode($jsonXml, true); // 转成数组
-//
-//        Log::channel('notify')->debug($notifyData);
-        $notifyData['out_trade_no'] = '2101086KBPWX4568';
-        $notifyData['trade_type'] = 'NATIVE';
-        $notifyData['transaction_id'] = '123456789123456789';
+        $xml     = file_get_contents("php://input");
+        $jsonXml = json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA));
+        $notifyData = json_decode($jsonXml, true); // 转成数组
+
+        Log::channel('notify')->debug($notifyData);
+        // 测试数据
+//        $notifyData['out_trade_no'] = '2101086KBPWX4568';
+//        $notifyData['trade_type'] = 'NATIVE';
+//        $notifyData['transaction_id'] = '123456789123456789';
 
         $appIdService = new AppIdServiceImpl();
         $appIds = $appIdService->model->select('id as app_id')->get();
