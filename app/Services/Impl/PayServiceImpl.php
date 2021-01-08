@@ -119,11 +119,15 @@ class PayServiceImpl implements PayService
         } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }
-        if ($redisOrder) {
-            $resData = json_decode($redisOrder, true);
-            return ['qrCodeUrl' => $resData['code_url'], 'amount' => $resData['total_price']];
+        if (!$redisOrder) {
+            throw new \Exception('订单不存在！');
         }
 
-        return [];
+        $resData = json_decode($redisOrder, true);
+        if ($resData['status'] != 10) {
+            throw new \Exception('订单已支付！');
+        }
+
+        return ['qrCodeUrl' => $resData['code_url'], 'amount' => $resData['total_price']];
     }
 }
