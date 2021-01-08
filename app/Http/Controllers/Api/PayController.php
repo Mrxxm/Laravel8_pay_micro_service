@@ -80,7 +80,11 @@ class PayController
                     (Redis::getInstance())->hSet($key, $hashKey, json_encode($hashValue));
                     // 通知第三方订单接口
                     if ($key == 'order_1') {
-                        api($hashValue['return_url'], "merchantOrderId={$hashKey}",'POST');
+                        try {
+                            api($hashValue['return_url'], "merchantOrderId={$hashKey}",'POST');
+                        } catch (\Exception $e) {
+                            Log::channel('notify_to_app')->debug($e->getMessage());
+                        }
                     }
 
                     break;
