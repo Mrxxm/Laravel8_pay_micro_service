@@ -83,7 +83,11 @@ class PayController
                         try {
                             api($hashValue['return_url'], "merchantOrderId={$hashKey}",'POST');
                         } catch (\Exception $e) {
-                            Log::channel('notify_to_app')->debug($e->getMessage());
+                            Log::channel('notify_to_app')->debug(
+                                " app: " . $key .
+                                        " return_url: {$hashValue['return_url']} " .
+                                        " merchantOrderId:{$hashKey} " . $e->getMessage()
+                            );
                         }
                     }
 
