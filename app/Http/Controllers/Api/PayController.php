@@ -68,6 +68,9 @@ class PayController
                 if ($hashValue) {
                     $hashValue = json_decode($hashValue, true);
                     $hashValue['pay_status'] = 20;
+                    $hashValue['trade_type'] = $notifyData['trade_type'];
+                    $hashValue['transaction_id'] = $notifyData['transaction_id'];
+
                     (Redis::getInstance())->hSet($key, $hashKey, json_encode($hashValue));
                     break;
                 }
