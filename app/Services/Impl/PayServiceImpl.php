@@ -31,8 +31,9 @@ class PayServiceImpl implements PayService
 
         $orderData = [
             'pay_status'  => 10, // 待支付 1: 已支付
-            'pay_type'    => $payType,
+            'order_no'    => $data['order_no'],
             'serve_type'  => $serveType,
+            'pay_type'    => $payType,
             'body'        => $data['body'],
             'user_id'     => $data['user_id'],
             'return_url'  => $data['return_url'],
