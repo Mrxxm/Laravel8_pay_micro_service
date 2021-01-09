@@ -96,7 +96,14 @@ class PayController
             }
         }
 
-        return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+        return '<xml>
+                  <return_code>
+                    <![CDATA[SUCCESS]]>
+                  </return_code>
+                  <return_msg>
+                    <![CDATA[OK]]>
+                  </return_msg>
+                </xml>';
     }
 
     public function getOrder(Request $request)
